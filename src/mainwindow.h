@@ -1,14 +1,28 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QMainWindow>
+#include <QGraphicsScene>
+#include "src/Graph/graph.h"
+
+namespace Ui {
+class MainWindow;
+}
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow() override;
+
+private slots:
+    void resizeEvent(QResizeEvent *event) override;
+
+    void showContextMenu(const QPoint &pos);
+
+private:
+    Ui::MainWindow *ui;
+    QGraphicsScene *scene;
+    Graph graph;
 };
-#endif // MAINWINDOW_H

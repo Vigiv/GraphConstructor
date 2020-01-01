@@ -16,10 +16,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/Graph/graph.cpp \
+    src/Graph/vertex.cpp \
     src/main.cpp \
     src/mainwindow.cpp
 
 HEADERS += \
+    src/Graph/graph.h \
+    src/Graph/vertex.h \
+    src/constants.h \
     src/mainwindow.h
 
 # Default rules for deployment.
@@ -28,3 +33,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES +=
+
+FORMS += \
+    src/mainwindow.ui

@@ -1,6 +1,8 @@
 #include "graph.h"
 
 #include <QCursor>
+#include <iterator>
+#include <vector>
 
 
 Graph::Graph(QObject *parent) : QObject(parent)
@@ -29,53 +31,28 @@ void Graph::makeVertex()
 
 void Graph::removeVertex()
 {
-    for (auto it = verteces.begin(); it != verteces.end(); ++it)
+    if (lastSelectedVertexIndex >= 0)
     {
-        QRectF rect = (*it)->boundingRect();
-        rect.moveLeft((*it)->pos().x());
-        rect.moveRight((*it)->pos().x());
-        rect.moveTop((*it)->pos().x());
-        rect.moveBottom((*it)->pos().y());
-
-        if (rect.contains(mousePos))
-        {
-            verteces.erase(it);
-            (*it)->~Vertex();
-            break;
-        }
+        verteces[lastSelectedVertexIndex]->~Vertex();
+        verteces.erase(verteces.begin() + lastSelectedVertexIndex);
+        lastSelectedVertexIndex = -1;
     }
+
 }
 
-bool Graph::pointIsVertex(const QPoint &pos) const
+bool Graph::pointIsVertex(const QPoint &pos)
 {
-    for (auto it = verteces.cbegin(); it != verteces.cend(); ++it)
+    for (auto it = verteces.begin(); it != verteces.end(); ++it)
     {
-        QRectF rect = (*it)->boundingRect();
-        rect.moveLeft((*it)->pos().x());
-        rect.moveRight((*it)->pos().x());
-        rect.moveTop((*it)->pos().x());
-        rect.moveBottom((*it)->pos().y());
-
-        if (rect.contains(pos))
+        if ((*it)->isHover())
+        {
+            lastSelectedVertexIndex = distance(verteces.begin(), it);
             return true;
+        }
     }
 
     return false;
+
+    Q_UNUSED(pos)
 }
 
-Vertex *Graph::getVertex(const QPoint &pos)
-{
-    for (auto it = verteces.cbegin(); it != verteces.cend(); ++it)
-    {
-        QRectF rect = (*it)->boundingRect();
-        rect.moveLeft((*it)->pos().x());
-        rect.moveRight((*it)->pos().x());
-        rect.moveTop((*it)->pos().x());
-        rect.moveBottom((*it)->pos().y());
-
-        if (rect.contains(pos))
-            return *it;
-    }
-
-    return nullptr;
-}

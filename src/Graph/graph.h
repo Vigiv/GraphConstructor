@@ -3,6 +3,7 @@
 #include <QObject>
 #include "src/Graph/vertex.h"
 
+
 class Graph : public QObject
 {
     Q_OBJECT
@@ -12,18 +13,18 @@ public:
     void setScene(QGraphicsScene *scene);
     void setMousePos(const QPoint &pos);
 
-    bool pointIsVertex(const QPoint &pos) const;
+    bool pointIsVertex(const QPoint &pos);
 
-private:
-    Vertex *getVertex(const QPoint &pos);
 
 public slots:
     void makeVertex();
     void removeVertex();
 
 private:
-    QVector<Vertex*> verteces;
+    std::vector<Vertex*> verteces;
     QGraphicsScene *scene;
+
+    long long lastSelectedVertexIndex{-1};
 
     QPoint mousePos;
 };

@@ -7,7 +7,8 @@
 
 Vertex::Vertex(QObject *parent) : QObject(parent)
 {
-
+    setAcceptHoverEvents(true);
+    setAcceptedMouseButtons(Qt::MouseButton::LeftButton);
 }
 
 QRectF Vertex::boundingRect() const
@@ -40,6 +41,20 @@ void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     this->setCursor(QCursor(Qt::ArrowCursor));
+
+    Q_UNUSED(event)
+}
+
+void Vertex::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+    hover = true;
+
+    Q_UNUSED(event)
+}
+
+void Vertex::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+    hover = false;
 
     Q_UNUSED(event)
 }

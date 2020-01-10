@@ -37,21 +37,11 @@ void Graph::removeVertex()
 {
     Vertex *last = lastSelected();
 
-    // delete edges
-    for (auto it = edges.begin(); it != edges.end(); ++it)
-    {
-        if ((*it)->getVerteces().first == last || (*it)->getVerteces().second == last)
-        {
-            (*it)->~Edge();
-            edges.erase(it);
-            --it;
-        }
-    }
+    removeEdges();
 
     /**************************************************************
      * удаляет последний выбранный Vertex и все его копии в истории
     ***************************************************************/
-
     for (auto it = vertecesHistory.begin(); it != vertecesHistory.end(); ++it)
     {
         if (*it == last)
@@ -62,6 +52,19 @@ void Graph::removeVertex()
     }
 
     scene->removeItem(last);
+}
+
+void Graph::removeEdges()
+{
+    for (auto it = edges.begin(); it != edges.end(); ++it)
+    {
+        if ((*it)->getVerteces().first == lastSelected() || (*it)->getVerteces().second == lastSelected())
+        {
+            (*it)->~Edge();
+            edges.erase(it);
+            --it;
+        }
+    }
 }
 void Graph::connectVerteces()
 {

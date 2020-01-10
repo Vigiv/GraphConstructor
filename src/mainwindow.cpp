@@ -56,6 +56,10 @@ void MainWindow::showContextMenu(const QPoint &pos)
         connect(removeVertex, SIGNAL(triggered()), &graph, SLOT(removeVertex()));
         menu->addAction(removeVertex);
 
+        QAction *removeEdges = new QAction(tr("Remove edges"), this);
+        connect(removeEdges, SIGNAL(triggered()), &graph, SLOT(removeEdges()));
+        menu->addAction(removeEdges);
+
         QAction *connectVertex = new QAction(tr("Connect vertex with"), this);
         connect(connectVertex, SIGNAL(triggered()), &graph, SLOT(connectVerteces()));
         menu->addAction(connectVertex);

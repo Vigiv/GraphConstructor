@@ -20,6 +20,7 @@ public:
 public slots:
     void makeVertex();
     void removeVertex();
+    void removeEdges();
     void connectVerteces();
 
     void moveVerteces();

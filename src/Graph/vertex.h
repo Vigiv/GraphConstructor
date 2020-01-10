@@ -8,8 +8,14 @@ class Vertex : public QObject, public QGraphicsItem
     Q_OBJECT
 public:
     explicit Vertex(QObject *parent = nullptr);
+
     bool isHover() const { return hover; }
+
     QRectF boundingRect() const override;
+
+signals:
+    void moveVerteces();
+    void vertexSelected(Vertex *);
 
 private:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
@@ -22,7 +28,7 @@ private:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
 
 private:
-    bool hover{false};
+    bool hover {false};
 };
 
 

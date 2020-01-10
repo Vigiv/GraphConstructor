@@ -2,7 +2,7 @@
 #include <QGraphicsScene>
 #include <QObject>
 #include "src/Graph/vertex.h"
-
+#include "src/Graph/edge.h"
 
 class Graph : public QObject
 {
@@ -14,18 +14,27 @@ public:
     void setMousePos(const QPoint &pos);
 
     bool pointIsVertex(const QPoint &pos);
+    bool isConnected(const Vertex *first, const Vertex *second) const;
 
 
 public slots:
     void makeVertex();
     void removeVertex();
+    void connectVerteces();
+
+    void moveVerteces();
+    void vertexSelected(Vertex *vertex);
 
 private:
-    std::vector<Vertex*> verteces;
+    Vertex *lastSelected();
+    Vertex *prelastSelected();
+
+private:
+    std::vector<Vertex*> vertecesHistory;
+    std::vector<Edge*> edges;
+
     QGraphicsScene *scene;
-
-    long long lastSelectedVertexIndex{-1};
-
     QPoint mousePos;
+    bool isSelectedFirstVertex{false};
 };
 

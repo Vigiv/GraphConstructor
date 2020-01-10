@@ -9,6 +9,8 @@ Vertex::Vertex(QObject *parent) : QObject(parent)
 {
     setAcceptHoverEvents(true);
     setAcceptedMouseButtons(Qt::MouseButton::LeftButton);
+
+    setZValue(VERTEX_Z_VALUE);
 }
 
 QRectF Vertex::boundingRect() const
@@ -29,6 +31,7 @@ void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 void Vertex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     this->setCursor(QCursor(Qt::ClosedHandCursor));
+    emit(vertexSelected(this));
 
     Q_UNUSED(event)
 }
@@ -36,6 +39,8 @@ void Vertex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     this->setPos(mapToScene(event->pos()));
+
+    emit(moveVerteces());
 }
 
 void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)

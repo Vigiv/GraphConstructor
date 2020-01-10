@@ -55,6 +55,10 @@ void MainWindow::showContextMenu(const QPoint &pos)
         QAction *removeVertex = new QAction(tr("Remove vertex"), this);
         connect(removeVertex, SIGNAL(triggered()), &graph, SLOT(removeVertex()));
         menu->addAction(removeVertex);
+
+        QAction *connectVertex = new QAction(tr("Connect vertex with"), this);
+        connect(connectVertex, SIGNAL(triggered()), &graph, SLOT(connectVerteces()));
+        menu->addAction(connectVertex);
     }
 
     menu->popup(ui->graphicsView->viewport()->mapToGlobal(pos));

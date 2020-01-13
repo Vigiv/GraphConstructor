@@ -9,7 +9,12 @@ class Vertex : public QObject, public QGraphicsItem
 public:
     explicit Vertex(QObject *parent = nullptr);
 
+    void setName(const QString &name);
+    void setId(int id);
+
     bool isHover() const { return hover; }
+    QString getName() const {return name; }
+    int getId() const { return id; }
 
     QRectF boundingRect() const override;
 
@@ -29,6 +34,7 @@ private:
 
 private:
     bool hover {false};
+    QString name;
+    int id;
 };
-
 

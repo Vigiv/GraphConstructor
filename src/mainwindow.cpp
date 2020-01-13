@@ -9,6 +9,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    matrix.setTable(ui->tableWidget);
+    connect(&graph, SIGNAL(vertexAdded(const Vertex*)), &matrix, SLOT(addVertex(const Vertex*)));
+    connect(&graph, SIGNAL(vertexRemoved(const Vertex*)), &matrix, SLOT(removeVertex(const Vertex*)));
+
+
     scene = new QGraphicsScene(this);
     graph.setScene(scene);
     ui->graphicsView->setScene(scene);
@@ -27,11 +32,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
-    ui->graphicsView->resize(width() - 2 * WINDOW_SPACING, height() - 2 * WINDOW_SPACING);
+    ui->graphicsView->resize(width() / 2 - 2 * WINDOW_SPACING, height() - 4 * WINDOW_SPACING);
+    ui->tableWidget->resize(width() / 2 - 2 * WINDOW_SPACING, height() / 2 - 2 * WINDOW_SPACING);
+    ui->tableWidget->move(width() / 2 + WINDOW_SPACING, height() / 2 - WINDOW_SPACING);
     scene->setSceneRect(ui->graphicsView->x(),
                         ui->graphicsView->y(),
                         ui->graphicsView->width() - 2 * WINDOW_SPACING,
-                        ui->graphicsView->height() - 2 * WINDOW_SPACING);
+                        ui->graphicsView->height() - 4 * WINDOW_SPACING);
 
     Q_UNUSED(event)
 }

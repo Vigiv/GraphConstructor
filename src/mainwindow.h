@@ -2,7 +2,9 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
+#include <QTableWidget>
 #include "src/Graph/graph.h"
+#include "src/Matrix/matrix.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,5 +26,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
+
     Graph graph;
+    Matrix matrix;
 };

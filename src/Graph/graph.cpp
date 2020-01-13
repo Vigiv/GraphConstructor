@@ -24,6 +24,8 @@ void Graph::makeVertex()
 {
     Vertex *vertex = new Vertex;
     vertex->setPos(mousePos);
+    vertex->setId(++lastVertexId);
+    vertex->setName(QString::number(lastVertexId));
 
     connect(vertex, SIGNAL(moveVerteces()), this, SLOT(moveVerteces()));
     connect(vertex, SIGNAL(vertexSelected(Vertex*)), this, SLOT(vertexSelected(Vertex*)));
@@ -31,11 +33,14 @@ void Graph::makeVertex()
     vertexSelected(vertex);
     vertecesHistory.push_back(vertex);
     scene->addItem(vertex);
+
+    emit(vertexAdded(vertex));
 }
 
 void Graph::removeVertex()
 {
     Vertex *last = lastSelected();
+    emit(vertexRemoved(last));
 
     removeEdges();
 

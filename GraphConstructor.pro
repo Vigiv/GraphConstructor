@@ -19,6 +19,7 @@ SOURCES += \
     src/Graph/edge.cpp \
     src/Graph/graph.cpp \
     src/Graph/vertex.cpp \
+    src/Matrix/matrix.cpp \
     src/main.cpp \
     src/mainwindow.cpp
 
@@ -26,6 +27,7 @@ HEADERS += \
     src/Graph/edge.h \
     src/Graph/graph.h \
     src/Graph/vertex.h \
+    src/Matrix/matrix.h \
     src/constants.h \
     src/mainwindow.h
 

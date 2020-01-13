@@ -19,8 +19,18 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>781</width>
+      <width>391</width>
       <height>521</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>271</y>
+      <width>371</width>
+      <height>261</height>
      </rect>
     </property>
    </widget>

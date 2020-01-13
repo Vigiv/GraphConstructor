@@ -26,6 +26,11 @@ public slots:
     void moveVerteces();
     void vertexSelected(Vertex *vertex);
 
+signals:
+    void vertexAdded(const Vertex *vertex);
+    void vertexRemoved(const Vertex *vertex);
+
+
 private:
     Vertex *lastSelected();
     Vertex *prelastSelected();
@@ -37,5 +42,7 @@ private:
     QGraphicsScene *scene;
     QPoint mousePos;
     bool isSelectedFirstVertex{false};
+
+    int lastVertexId{-1};
 };
 

@@ -13,6 +13,16 @@ Vertex::Vertex(QObject *parent) : QObject(parent)
     setZValue(VERTEX_Z_VALUE);
 }
 
+void Vertex::setName(const QString &name)
+{
+    this->name = name;
+}
+
+void Vertex::setId(int id)
+{
+    this->id = id;
+}
+
 QRectF Vertex::boundingRect() const
 {
     return QRectF(-VERTEX_RADIUS / 2, -VERTEX_RADIUS / 2, VERTEX_RADIUS, VERTEX_RADIUS);

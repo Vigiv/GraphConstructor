@@ -16,7 +16,7 @@ public:
 public slots:
     void addVertex(const Vertex *vertex);
     void removeVertex(const Vertex *vertex);
-
+    void addEdge(Edge *edge);
 
 private:
     QTableWidget *table;

@@ -29,7 +29,7 @@ public slots:
 signals:
     void vertexAdded(const Vertex *vertex);
     void vertexRemoved(const Vertex *vertex);
-
+    void edgeAdded(Edge *edge);
 
 private:
     Vertex *lastSelected();

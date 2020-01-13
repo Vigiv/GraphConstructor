@@ -25,7 +25,7 @@ void Graph::makeVertex()
     Vertex *vertex = new Vertex;
     vertex->setPos(mousePos);
     vertex->setId(++lastVertexId);
-    vertex->setName(QString::number(lastVertexId));
+    vertex->setName("v" + QString::number(lastVertexId));
 
     connect(vertex, SIGNAL(moveVerteces()), this, SLOT(moveVerteces()));
     connect(vertex, SIGNAL(vertexSelected(Vertex*)), this, SLOT(vertexSelected(Vertex*)));
@@ -93,6 +93,8 @@ void Graph::vertexSelected(Vertex *vertex)
             edge->setVerteces(vertex, last);
             edges.push_back(edge);
             scene->addItem(edge);
+
+            emit(edgeAdded(edge));
         }
 
         isSelectedFirstVertex = false;

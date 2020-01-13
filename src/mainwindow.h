@@ -28,5 +28,5 @@ private:
     QGraphicsScene *scene;
 
     Graph graph;
-    Matrix matrix;
+    Matrix *matrix;
 };

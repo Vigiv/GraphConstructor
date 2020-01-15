@@ -22,7 +22,7 @@ void Graph::setMousePos(const QPoint &pos)
 
 void Graph::makeVertex()
 {
-    Vertex *vertex = new Vertex;
+    Vertex *vertex = new Vertex(scene);
     vertex->setPos(mousePos);
     vertex->setId(++lastVertexId);
     vertex->setName("v" + QString::number(lastVertexId));
@@ -89,7 +89,7 @@ void Graph::vertexSelected(Vertex *vertex)
 
         if (vertex != last && !isConnected(vertex, last))
         {
-            Edge *edge = new Edge;
+            Edge *edge = new Edge(scene);
             edge->setVerteces(vertex, last);
             edges.push_back(edge);
             scene->addItem(edge);

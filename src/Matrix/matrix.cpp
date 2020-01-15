@@ -25,7 +25,7 @@ void Matrix::addVertex(const Vertex *vertex)
 
     for (int i = 0; i < table->columnCount(); ++i)
     {
-        QSpinBox *spinBox = new QSpinBox();
+        QSpinBox *spinBox = new QSpinBox(table);
         spinBox->setValue(0);
         spinBox->setRange(0, 1);
         table->setCellWidget(rows - 1, i, spinBox);
@@ -55,7 +55,7 @@ void Matrix::addEdge(Edge *edge)
 
     for (int i = 0; i < table->rowCount(); ++i)
     {
-        QSpinBox *spinBox = new QSpinBox();
+        QSpinBox *spinBox = new QSpinBox(table);
         spinBox->setValue(0);
         spinBox->setRange(0, 1);
         table->setCellWidget(i, columns - 1, spinBox);
@@ -66,7 +66,7 @@ void Matrix::addEdge(Edge *edge)
     {
         if (*it == edge->getVerteces().first || *it == edge->getVerteces().second)
         {
-            QSpinBox *spinBox = new QSpinBox();
+            QSpinBox *spinBox = new QSpinBox(table);
             spinBox->setValue(1);
             spinBox->setRange(0, 1);
 

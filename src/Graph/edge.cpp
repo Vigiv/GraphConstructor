@@ -14,6 +14,16 @@ void Edge::setVerteces(Vertex *first, Vertex *second)
     secondVertex = second;
 }
 
+void Edge::setName(const QString &name)
+{
+    this->name = name;
+}
+
+void Edge::setId(int id)
+{
+    this->id = id;
+}
+
 QRectF Edge::boundingRect() const
 {
     QPointF topLeft = QPointF(std::min(firstVertex->pos().x(), secondVertex->pos().x()),

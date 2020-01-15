@@ -14,9 +14,13 @@ public:
     explicit Edge(QObject *parent = nullptr);
 
     void setVerteces(Vertex *first, Vertex *second);
+    void setName(const QString &name);
+    void setId(int id);
 
     QRectF boundingRect() const override;
     std::pair<Vertex *, Vertex *> getVerteces() const;
+    QString getName() const {return name; }
+    int getId() const { return id; }
 
 private:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
@@ -24,6 +28,9 @@ private:
 private:
     Vertex *firstVertex{nullptr};
     Vertex *secondVertex{nullptr};
+
+    QString name;
+    int id;
 };
 
 #endif // EDGE_H

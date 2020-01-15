@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&graph, SIGNAL(vertexAdded(const Vertex*)), matrix, SLOT(addVertex(const Vertex*)));
     connect(&graph, SIGNAL(vertexRemoved(const Vertex*)), matrix, SLOT(removeVertex(const Vertex*)));
     connect(&graph, SIGNAL(edgeAdded(Edge*)), matrix, SLOT(addEdge(Edge*)));
+    connect(&graph, SIGNAL(edgeRemoved(const Edge*)), matrix, SLOT(removeEdge(const Edge*)));
 
     scene = new QGraphicsScene(this);
     graph.setScene(scene);

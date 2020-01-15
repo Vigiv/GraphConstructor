@@ -65,6 +65,7 @@ void Graph::removeEdges()
     {
         if ((*it)->getVerteces().first == lastSelected() || (*it)->getVerteces().second == lastSelected())
         {
+            emit(edgeRemoved(*it));
             (*it)->~Edge();
             edges.erase(it);
             --it;
@@ -91,6 +92,8 @@ void Graph::vertexSelected(Vertex *vertex)
         {
             Edge *edge = new Edge(scene);
             edge->setVerteces(vertex, last);
+            edge->setId(++lastEdgeId);
+            edge->setName("e" + QString::number(lastEdgeId));
             edges.push_back(edge);
             scene->addItem(edge);
 

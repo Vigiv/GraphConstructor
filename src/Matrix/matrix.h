@@ -17,12 +17,15 @@ public slots:
     void addVertex(const Vertex *vertex);
     void removeVertex(const Vertex *vertex);
     void addEdge(Edge *edge);
+    void removeEdge(const Edge *edge);
 
 private:
     QTableWidget *table;
 
     QStringList verticalHeader;
+    QStringList horizontalHeader;
 
     std::vector<const Vertex*> verteces;
+    std::vector<const Edge*> edges;
 };
 

@@ -30,6 +30,7 @@ signals:
     void vertexAdded(const Vertex *vertex);
     void vertexRemoved(const Vertex *vertex);
     void edgeAdded(Edge *edge);
+    void edgeRemoved(const Edge *edge);
 
 private:
     Vertex *lastSelected();
@@ -44,5 +45,6 @@ private:
     bool isSelectedFirstVertex{false};
 
     int lastVertexId{-1};
+    int lastEdgeId{-1};
 };
 

@@ -50,8 +50,13 @@ void Matrix::removeVertex(const Vertex *vertex)
 
 void Matrix::addEdge(Edge *edge)
 {
+    edges.push_back(edge);
+
     int columns = table->columnCount();
     table->setColumnCount(++columns);
+
+    horizontalHeader.append(edge->getName());
+    table->setHorizontalHeaderLabels(horizontalHeader);
 
     for (int i = 0; i < table->rowCount(); ++i)
     {
@@ -74,4 +79,20 @@ void Matrix::addEdge(Edge *edge)
         }
     }
 
+}
+
+void Matrix::removeEdge(const Edge *edge)
+{
+    for (auto it = edges.begin(); it != edges.end(); ++it)
+    {
+        if (*it == edge)
+        {
+            edges.erase(it);
+            break;
+        }
+    }
+
+    int index = horizontalHeader.indexOf(edge->getName());
+    horizontalHeader.removeAt(index);
+    table->removeColumn(index);
 }

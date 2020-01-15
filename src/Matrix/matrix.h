@@ -20,6 +20,9 @@ public slots:
     void removeEdge(const Edge *edge);
 
 private:
+    void createCell(int row, int column, int value);
+
+private:
     QTableWidget *table;
 
     QStringList verticalHeader;

@@ -25,10 +25,7 @@ void Matrix::addVertex(const Vertex *vertex)
 
     for (int i = 0; i < table->columnCount(); ++i)
     {
-        QSpinBox *spinBox = new QSpinBox(table);
-        spinBox->setValue(0);
-        spinBox->setRange(0, 1);
-        table->setCellWidget(rows - 1, i, spinBox);
+        createCell(rows - 1, i, 0);
     }
 }
 
@@ -60,25 +57,15 @@ void Matrix::addEdge(Edge *edge)
 
     for (int i = 0; i < table->rowCount(); ++i)
     {
-        QSpinBox *spinBox = new QSpinBox(table);
-        spinBox->setValue(0);
-        spinBox->setRange(0, 1);
-        table->setCellWidget(i, columns - 1, spinBox);
+        createCell(i, columns - 1, 0);
     }
 
     //устанавливает '1' на пересечении вершин и ребер
-    for (auto it = verteces.begin(); it != verteces.end(); ++it)
-    {
-        if (*it == edge->getVerteces().first || *it == edge->getVerteces().second)
-        {
-            QSpinBox *spinBox = new QSpinBox(table);
-            spinBox->setValue(1);
-            spinBox->setRange(0, 1);
+    int firstRow = verticalHeader.indexOf(edge->getVerteces().first->getName());
+    createCell(firstRow, columns - 1, 1);
 
-            table->setCellWidget((*it)->getId(), columns - 1, spinBox);
-        }
-    }
-
+    int secondRow = verticalHeader.indexOf(edge->getVerteces().second->getName());
+    createCell(secondRow, columns - 1, 1);
 }
 
 void Matrix::removeEdge(const Edge *edge)
@@ -95,4 +82,13 @@ void Matrix::removeEdge(const Edge *edge)
     int index = horizontalHeader.indexOf(edge->getName());
     horizontalHeader.removeAt(index);
     table->removeColumn(index);
+}
+
+void Matrix::createCell(int row, int column, int value)
+{
+    QSpinBox *spinBox = new QSpinBox(table);
+    spinBox->setValue(value);
+    spinBox->setRange(0, 1);
+
+    table->setCellWidget(row, column, spinBox);
 }

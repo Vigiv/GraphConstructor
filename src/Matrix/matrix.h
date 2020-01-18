@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QSpinBox>
 #include <QTableWidget>
 #include "src/Graph/vertex.h"
 #include "src/Graph/edge.h"

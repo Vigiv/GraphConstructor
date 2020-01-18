@@ -1,6 +1,6 @@
 #include "matrix.h"
 
-#include <QSpinBox>
+#include "src/Matrix/cell.h"
 
 
 Matrix::Matrix(QObject *parent) : QObject(parent)
@@ -60,6 +60,8 @@ void Matrix::addEdge(Edge *edge)
         createCell(i, columns - 1, 0);
     }
 
+    table->resizeColumnToContents(columns - 1);
+
     //устанавливает '1' на пересечении вершин и ребер
     int firstRow = verticalHeader.indexOf(edge->getVerteces().first->getName());
     createCell(firstRow, columns - 1, 1);
@@ -86,9 +88,12 @@ void Matrix::removeEdge(const Edge *edge)
 
 void Matrix::createCell(int row, int column, int value)
 {
-    QSpinBox *spinBox = new QSpinBox(table);
-    spinBox->setValue(value);
-    spinBox->setRange(0, 1);
+    Cell *cell = new Cell(table);
+    cell->setValue(value);
+    if (value == 1)
+        cell->setState(Cell::State::VERTEX);
+    else
+        cell->setState(Cell::State::OCCUPY);
 
-    table->setCellWidget(row, column, spinBox);
+    table->setCellWidget(row, column, cell->getWidget());
 }

@@ -137,6 +137,7 @@ bool Graph::pointIsVertex(const QPoint &pos)
         }
     }
 
+    isSelectedFirstVertex = false;
     return false;
 
     Q_UNUSED(pos)

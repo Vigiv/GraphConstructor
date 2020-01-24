@@ -1,6 +1,5 @@
 #include "cell.h"
 
-#include <QDebug>
 
 Cell::Cell(QObject *objParent, QWidget *widgetParent) : QObject(objParent)
 {
@@ -13,7 +12,8 @@ void Cell::setState(Cell::State state)
 {
     this->state = state;
 
-    switch (state) {
+    switch (state)
+    {
     case State::EMPTY:
         setColor(Qt::white);
         spinBox->setRange(0, 1);
@@ -26,7 +26,6 @@ void Cell::setState(Cell::State state)
         setColor(QColor(205, 92, 92));
         spinBox->setRange(0, 0);
         break;
-
     }
 }
 
@@ -42,12 +41,12 @@ void Cell::setColor(const QColor &color)
     spinBox->setPalette(palette);
 }
 
-QSpinBox *Cell::getWidget() const
+QSpinBox *Cell::getWidget()
 {
     return spinBox;
 }
 
 void Cell::changed(int)
 {
-    emit(cellChanged(spinBox));
+    emit(cellChanged(this));
 }

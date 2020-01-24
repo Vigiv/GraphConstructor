@@ -5,6 +5,7 @@
 #include <QTableWidget>
 #include "src/Graph/vertex.h"
 #include "src/Graph/edge.h"
+#include "src/Matrix/cell.h"
 
 class Matrix : public QObject
 {
@@ -20,8 +21,13 @@ public slots:
     void addEdge(Edge *edge);
     void removeEdge(const Edge *edge);
 
+    void cellChanged(Cell *cell);
+
 private:
     void createCell(int row, int column, int value);
+
+    void updateColumn(int column);
+    bool cellIsBlocked(int row) const;
 
 private:
     QTableWidget *table;
@@ -31,5 +37,7 @@ private:
 
     std::vector<const Vertex*> verteces;
     std::vector<const Edge*> edges;
+
+    QMap<QPair<int, int>, Cell*> cells;
 };
 

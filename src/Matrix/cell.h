@@ -17,12 +17,14 @@ public:
     void setValue(int value);
     void setColor(const QColor &color);
 
-    QSpinBox *getWidget() const;
+    QSpinBox *getWidget();
+    State getState() const { return state; }
+    int getValue() const { return spinBox->value(); }
 
 signals:
-    void cellChanged(QSpinBox *spinBox);
+    void cellChanged(Cell *cell);
 
-public slots:
+private slots:
     void changed(int);
 
 private:

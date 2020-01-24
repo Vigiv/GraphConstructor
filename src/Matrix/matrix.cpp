@@ -55,19 +55,18 @@ void Matrix::addEdge(Edge *edge)
     horizontalHeader.append(edge->getName());
     table->setHorizontalHeaderLabels(horizontalHeader);
 
+    int firstRow = verticalHeader.indexOf(edge->getVerteces().first->getName());
+    int secondRow = verticalHeader.indexOf(edge->getVerteces().second->getName());
+
     for (int i = 0; i < table->rowCount(); ++i)
     {
-        createCell(i, columns - 1, 0);
+        if (i == firstRow || i == secondRow)
+            createCell(i, columns - 1, 1);
+        else
+            createCell(i, columns - 1, 0);
     }
 
     table->resizeColumnToContents(columns - 1);
-
-    //устанавливает '1' на пересечении вершин и ребер
-    int firstRow = verticalHeader.indexOf(edge->getVerteces().first->getName());
-    createCell(firstRow, columns - 1, 1);
-
-    int secondRow = verticalHeader.indexOf(edge->getVerteces().second->getName());
-    createCell(secondRow, columns - 1, 1);
 }
 
 void Matrix::removeEdge(const Edge *edge)
@@ -86,14 +85,47 @@ void Matrix::removeEdge(const Edge *edge)
     table->removeColumn(index);
 }
 
+void Matrix::cellChanged(Cell *cell)
+{
+    if (cell->getValue() == 0)
+        updateColumn(table->currentColumn());
+}
+
 void Matrix::createCell(int row, int column, int value)
 {
-    Cell *cell = new Cell(table);
+    Cell *cell = new Cell(nullptr, table);
     cell->setValue(value);
     if (value == 1)
         cell->setState(Cell::State::VERTEX);
     else
         cell->setState(Cell::State::OCCUPY);
 
+    connect(cell, SIGNAL(cellChanged(Cell *)), this, SLOT(cellChanged(Cell *)));
+
+    if (!cells.contains(QPair<int, int>(row, column)))
+        cells.insert(QPair<int, int>(row, column), cell);
     table->setCellWidget(row, column, cell->getWidget());
+}
+
+void Matrix::updateColumn(int column)
+{
+    for (int row = 0; row < table->rowCount(); ++row)
+    {
+        Cell *cell = cells.value(QPair<int, int>(row, column));
+        if (cell->getState() == Cell::State::OCCUPY && !cellIsBlocked(row))
+        {
+            cell->setState(Cell::State::EMPTY);
+        }
+    }
+}
+
+bool Matrix::cellIsBlocked (int row) const
+{
+    for (int i = 0; i < table->columnCount(); ++i)
+    {
+        if (cells.value(QPair<int, int>(row, i))->getState() == Cell::State::VERTEX)
+            return true;
+    }
+
+    return false;
 }

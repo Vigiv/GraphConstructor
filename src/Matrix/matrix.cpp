@@ -88,7 +88,19 @@ void Matrix::removeEdge(const Edge *edge)
 void Matrix::cellChanged(Cell *cell)
 {
     if (cell->getValue() == 0)
-        updateColumn(table->currentColumn());
+    {
+        cell->setState(Cell::State::EMPTY);
+        setOccupyToEmpty(table->currentColumn());
+    }
+    else if (cell->getValue() == 1)
+    {
+        cell->setState(Cell::State::VERTEX);
+
+        if (getVertecesCount(table->currentColumn()) == 1)
+            setBlockedEmptyToOccupy(table->currentColumn());
+        else if (getVertecesCount(table->currentColumn()) == 2)
+            setAllEmptyToOccupy(table->currentColumn());
+    }
 }
 
 void Matrix::createCell(int row, int column, int value)
@@ -107,16 +119,78 @@ void Matrix::createCell(int row, int column, int value)
     table->setCellWidget(row, column, cell->getWidget());
 }
 
-void Matrix::updateColumn(int column)
+void Matrix::setOccupyToEmpty(int column)
 {
     for (int row = 0; row < table->rowCount(); ++row)
     {
         Cell *cell = cells.value(QPair<int, int>(row, column));
-        if (cell->getState() == Cell::State::OCCUPY && !cellIsBlocked(row))
+        if (cell->getState() == Cell::State::OCCUPY)
         {
-            cell->setState(Cell::State::EMPTY);
+            if ((getVertecesCount(column) == 1 && !cellIsBlocked(row)) || getVertecesCount(column) == 0)
+                cell->setState(Cell::State::EMPTY);
         }
     }
+}
+
+void Matrix::setAllEmptyToOccupy(int column)
+{
+    for (int row = 0; row < table->rowCount(); ++row)
+    {
+        Cell *cell = cells.value(QPair<int, int>(row, column));
+        if (cell->getState() == Cell::State::EMPTY)
+        {
+            cell->setState(Cell::State::OCCUPY);
+        }
+    }
+}
+
+void Matrix::setBlockedEmptyToOccupy(int column)
+{
+    int row = table->currentRow();
+
+    QVector<int> anotherRows = getAnotherVertecesRows(row);
+
+    for (int i = 0; i < table->rowCount(); ++i)
+    {
+        if (anotherRows.contains(i))
+            cells.value(QPair<int, int>(i, column))->setState(Cell::State::OCCUPY);
+    }
+}
+
+
+QPair<int, int> Matrix::getVertexRows(int column) const
+{
+    QPair<int, int> rows { -1, -1 };
+
+    for (int i = 0; i < table->rowCount(); ++i)
+    {
+        if (cells.value(QPair<int, int>(i, column))->getState() == Cell::State::VERTEX)
+        {
+            if (rows.first == -1)
+                rows.first = i;
+            else
+                rows.second = i;
+        }
+    }
+
+    return rows;
+}
+
+QVector<int> Matrix::getAnotherVertecesRows(int row) const
+{
+    QVector<int> another;
+
+    for (int i = 0; i < table->columnCount(); ++i)
+    {
+        QPair<int, int> rows = getVertexRows(i);
+
+        if (rows.first == row && rows.second != -1)
+            another.push_back(rows.second);
+        else if (rows.second == row)
+            another.push_back(rows.first);
+    }
+
+    return another;
 }
 
 bool Matrix::cellIsBlocked (int row) const
@@ -128,4 +202,15 @@ bool Matrix::cellIsBlocked (int row) const
     }
 
     return false;
+}
+
+int Matrix::getVertecesCount(int column) const
+{
+    int count = 0;
+
+    for (int row = 0; row < table->rowCount(); ++row)
+        if (cells.value(QPair<int, int>(row, column))->getState() == Cell::State::VERTEX)
+            count++;
+
+    return count;
 }

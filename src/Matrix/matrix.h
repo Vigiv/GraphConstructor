@@ -26,8 +26,14 @@ public slots:
 private:
     void createCell(int row, int column, int value);
 
-    void updateColumn(int column);
+    void setOccupyToEmpty(int column);
+    void setAllEmptyToOccupy(int column);
+    void setBlockedEmptyToOccupy(int column);
+
+    QPair<int, int> getVertexRows(int column) const;
+    QVector<int> getAnotherVertecesRows(int row) const;
     bool cellIsBlocked(int row) const;
+    int getVertecesCount(int column) const;
 
 private:
     QTableWidget *table;

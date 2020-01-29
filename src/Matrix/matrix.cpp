@@ -126,7 +126,7 @@ void Matrix::setOccupyToEmpty(int column)
         Cell *cell = cells.value(QPair<int, int>(row, column));
         if (cell->getState() == Cell::State::OCCUPY)
         {
-            if ((getVertecesCount(column) == 1 && !cellIsBlocked(row)) || getVertecesCount(column) == 0)
+            if ((getVertecesCount(column) == 1 && !cellIsBlocked(row, column)) || getVertecesCount(column) == 0)
                 cell->setState(Cell::State::EMPTY);
         }
     }
@@ -193,12 +193,22 @@ QVector<int> Matrix::getAnotherVertecesRows(int row) const
     return another;
 }
 
-bool Matrix::cellIsBlocked (int row) const
+bool Matrix::cellIsBlocked (int row, int column) const
 {
     for (int i = 0; i < table->columnCount(); ++i)
     {
         if (cells.value(QPair<int, int>(row, i))->getState() == Cell::State::VERTEX)
-            return true;
+        {
+            QPair<int, int> rows = getVertexRows(column);
+            int vertexRow;
+            if (rows.first != -1)
+                vertexRow = rows.first;
+            else
+                vertexRow = rows.second;
+
+            if (cells.value(QPair<int, int>(vertexRow, i))->getState() == Cell::State::VERTEX)
+                return true;
+        }
     }
 
     return false;

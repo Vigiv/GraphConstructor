@@ -32,7 +32,7 @@ private:
 
     QPair<int, int> getVertexRows(int column) const;
     QVector<int> getAnotherVertecesRows(int row) const;
-    bool cellIsBlocked(int row) const;
+    bool cellIsBlocked(int row, int column) const;
     int getVertecesCount(int column) const;
 
 private:

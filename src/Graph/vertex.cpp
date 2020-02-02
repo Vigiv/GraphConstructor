@@ -30,9 +30,13 @@ QRectF Vertex::boundingRect() const
 
 void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setPen(Qt::black);
-    painter->setBrush(QBrush(Qt::red, Qt::SolidPattern));
-    painter->drawEllipse(-VERTEX_RADIUS / 2, -VERTEX_RADIUS / 2, VERTEX_RADIUS, VERTEX_RADIUS);
+    painter->setPen(VERTEX_BORDER_COLOR);
+    painter->setBrush(QBrush(VERTEX_BACKGROUND_COLOR, Qt::SolidPattern));
+    painter->drawEllipse(boundingRect());
+
+    painter->setPen(VERTEX_TEXT_COLOR);
+    painter->setFont(QFont("Arial", VERTEX_TEXT_SIZE));
+    painter->drawText(boundingRect(), Qt::AlignCenter, name);
 
     Q_UNUSED(option)
     Q_UNUSED(widget)

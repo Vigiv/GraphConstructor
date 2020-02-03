@@ -40,9 +40,20 @@ void Matrix::removeVertex(const Vertex *vertex)
         }
     }
 
-    int index = verticalHeader.indexOf(vertex->getName());
-    verticalHeader.removeAt(index);
-    table->removeRow(index);
+    int row = verticalHeader.indexOf(vertex->getName());
+    verticalHeader.removeAt(row);
+
+    for (int c = 0; c < table->columnCount(); ++c)
+    {
+        for (int r = row; r < table->rowCount() - 1; ++r)
+        {
+            Cell *following = cells[QPair<int, int>(r + 1, c)];
+            createCell(r, c, following->getValue());
+        }
+    }
+
+    table->removeRow(table->rowCount() - 1);
+    table->setVerticalHeaderLabels(verticalHeader);
 }
 
 void Matrix::addEdge(Edge *edge)
@@ -80,9 +91,20 @@ void Matrix::removeEdge(const Edge *edge)
         }
     }
 
-    int index = horizontalHeader.indexOf(edge->getName());
-    horizontalHeader.removeAt(index);
-    table->removeColumn(index);
+    int column = horizontalHeader.indexOf(edge->getName());
+    horizontalHeader.removeAt(column);
+
+    for (int r = 0; r < table->rowCount(); ++r)
+    {
+        for (int c = column; c < table->columnCount() - 1; ++c)
+        {
+            Cell *following = cells[QPair<int, int>(r, c + 1)];
+            createCell(r, c, following->getValue());
+        }
+    }
+
+    table->removeColumn(table->columnCount() - 1);
+    table->setHorizontalHeaderLabels(horizontalHeader);
 }
 
 void Matrix::cellChanged(Cell *cell)
@@ -114,8 +136,9 @@ void Matrix::createCell(int row, int column, int value)
 
     connect(cell, SIGNAL(cellChanged(Cell *)), this, SLOT(cellChanged(Cell *)));
 
-    if (!cells.contains(QPair<int, int>(row, column)))
-        cells.insert(QPair<int, int>(row, column), cell);
+    if (cells.contains(QPair<int, int>(row, column)))
+        cells.remove(QPair<int, int>(row, column));
+    cells.insert(QPair<int, int>(row, column), cell);
     table->setCellWidget(row, column, cell->getWidget());
 }
 

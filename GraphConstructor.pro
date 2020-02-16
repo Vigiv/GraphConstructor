@@ -17,20 +17,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     src/Graph/edge.cpp \
-    src/Graph/graph.cpp \
+    src/Graph/graphscene.cpp \
     src/Graph/vertex.cpp \
     src/Matrix/cell.cpp \
     src/Matrix/matrix.cpp \
+    src/graph.cpp \
     src/main.cpp \
     src/mainwindow.cpp
 
 HEADERS += \
     src/Graph/edge.h \
-    src/Graph/graph.h \
+    src/Graph/graphscene.h \
     src/Graph/vertex.h \
     src/Matrix/cell.h \
     src/Matrix/matrix.h \
     src/constants.h \
+    src/graph.h \
     src/mainwindow.h
 
 # Default rules for deployment.
@@ -42,3 +44,5 @@ RESOURCES +=
 
 FORMS += \
     src/mainwindow.ui
+
+DISTFILES +=

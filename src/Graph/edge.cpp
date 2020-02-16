@@ -42,8 +42,11 @@ std::pair<Vertex *, Vertex *> Edge::getVerteces() const
 
 void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setPen(QPen(Qt::black, 4));
-    painter->drawLine(firstVertex->pos(), secondVertex->pos());
+    if (firstVertex != nullptr && secondVertex != nullptr)
+    {
+        painter->setPen(QPen(Qt::black, 4));
+        painter->drawLine(firstVertex->pos(), secondVertex->pos());
+    }
 
     Q_UNUSED(option)
     Q_UNUSED(widget)

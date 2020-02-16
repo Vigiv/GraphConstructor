@@ -13,7 +13,13 @@ void Matrix::setTable(QTableWidget *table)
     this->table = table;
 }
 
-void Matrix::addVertex(const Vertex *vertex)
+void Matrix::resize(int width, int height)
+{
+    table->resize(width / 2 - 2 * WINDOW_SPACING, height / 2 - 2 * WINDOW_SPACING);
+    table->move(width / 2 + WINDOW_SPACING, height / 2 - WINDOW_SPACING);
+}
+
+void Matrix::addVertex(Vertex *vertex)
 {
     verteces.push_back(vertex);
 
@@ -29,16 +35,9 @@ void Matrix::addVertex(const Vertex *vertex)
     }
 }
 
-void Matrix::removeVertex(const Vertex *vertex)
+void Matrix::removeVertex(Vertex *vertex)
 {
-    for (auto it = verteces.begin(); it != verteces.end(); ++it)
-    {
-        if (*it == vertex)
-        {
-            verteces.erase(it);
-            break;
-        }
-    }
+    verteces.removeOne(vertex);
 
     int row = verticalHeader.indexOf(vertex->getName());
     verticalHeader.removeAt(row);
@@ -80,16 +79,9 @@ void Matrix::addEdge(Edge *edge)
     table->resizeColumnToContents(columns - 1);
 }
 
-void Matrix::removeEdge(const Edge *edge)
-{
-    for (auto it = edges.begin(); it != edges.end(); ++it)
-    {
-        if (*it == edge)
-        {
-            edges.erase(it);
-            break;
-        }
-    }
+void Matrix::removeEdge(Edge *edge)
+{   
+    edges.removeOne(edge);
 
     int column = horizontalHeader.indexOf(edge->getName());
     horizontalHeader.removeAt(column);

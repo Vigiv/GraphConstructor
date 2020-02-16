@@ -14,14 +14,19 @@ public:
     explicit Matrix(QObject *parent = nullptr);
 
     void setTable(QTableWidget *table);
+    void resize(int width, int height);
 
 public slots:
-    void addVertex(const Vertex *vertex);
-    void removeVertex(const Vertex *vertex);
+    void addVertex(Vertex *vertex);
+    void removeVertex(Vertex *vertex);
     void addEdge(Edge *edge);
-    void removeEdge(const Edge *edge);
+    void removeEdge(Edge *edge);
 
     void cellChanged(Cell *cell);
+
+signals:
+    void vertexRemoved(Vertex* vertex);
+    void edgeRemoved(Edge* edge);
 
 private:
     void createCell(int row, int column, int value);
@@ -41,8 +46,10 @@ private:
     QStringList verticalHeader;
     QStringList horizontalHeader;
 
-    std::vector<const Vertex*> verteces;
-    std::vector<const Edge*> edges;
+    QList<Vertex*> verteces;
+    QList<Edge*> edges;
+
+    QPoint mousePos;
 
     QMap<QPair<int, int>, Cell*> cells;
 };

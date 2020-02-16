@@ -3,8 +3,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QTableWidget>
-#include "src/Graph/graph.h"
-#include "src/Matrix/matrix.h"
+#include "src/graph.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,12 +20,13 @@ public:
 private slots:
     void resizeEvent(QResizeEvent *event) override;
 
-    void showContextMenu(const QPoint &pos);
 
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene *scene;
+    //QGraphicsScene *scene;
 
-    Graph graph;
-    Matrix *matrix;
+    //GraphScene graphScene;
+    //Matrix *matrix;
+
+    Graph *graph;
 };

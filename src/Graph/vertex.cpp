@@ -47,6 +47,7 @@ void Vertex::mousePressEvent(QGraphicsSceneMouseEvent *event)
     this->setCursor(QCursor(Qt::ClosedHandCursor));
     emit(vertexSelected(this));
 
+
     Q_UNUSED(event)
 }
 

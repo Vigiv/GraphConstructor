@@ -18,14 +18,7 @@ void Graph::setTable(QTableWidget *table)
     matrix->setTable(table);
 }
 
-void Graph::setView(QGraphicsView *view)
+void Graph::setGraphView(QGraphicsView *view)
 {
     graphScene->setGraphicsView(view);
-}
-
-void Graph::resize(int width, int height)
-{
-    graphScene->resize(width, height);
-
-    matrix->resize(width, height);
 }

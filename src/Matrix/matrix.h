@@ -14,7 +14,6 @@ public:
     explicit Matrix(QObject *parent = nullptr);
 
     void setTable(QTableWidget *table);
-    void resize(int width, int height);
 
 public slots:
     void addVertex(Vertex *vertex);
@@ -29,7 +28,7 @@ signals:
     void edgeRemoved(Edge* edge);
 
 private:
-    void createCell(int row, int column, int value);
+    void createCell(int row, int column, Cell::State state);
 
     void setOccupyToEmpty(int column);
     void setAllEmptyToOccupy(int column);

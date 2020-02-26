@@ -11,11 +11,10 @@ public:
     explicit GraphScene(QObject *parent = nullptr);
 
     void setGraphicsView(QGraphicsView *view);
-    void resize(int width, int height);
 
     bool pointIsVertex(const QPoint &pos);
     bool isConnected(const Vertex *first, const Vertex *second) const;
-    QGraphicsScene *getScene() const { return scene; }
+
 
 public slots:
     void createVertexAction();
@@ -29,6 +28,8 @@ public slots:
 
     void removeEdge(Edge *edge);
     void removeVertex(Vertex *vertex);
+
+    void addEmptyEdge();
 
 private slots:
     void addVertex(const QPoint& pos);
@@ -50,7 +51,7 @@ private:
     Vertex *lastVertex { nullptr };
 
     QGraphicsView *view;
-    QGraphicsScene *scene;
+    //QGraphicsScene *scene;
     QPoint mousePos;
     bool isSelectedFirstVertex { false };
 

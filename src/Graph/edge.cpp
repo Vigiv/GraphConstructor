@@ -26,13 +26,18 @@ void Edge::setId(int id)
 
 QRectF Edge::boundingRect() const
 {
-    QPointF topLeft = QPointF(std::min(firstVertex->pos().x(), secondVertex->pos().x()),
-                             std::min(firstVertex->pos().y(), secondVertex->pos().y()));
+    if (firstVertex != nullptr && secondVertex != nullptr)
+    {
+        QPointF topLeft = QPointF(std::min(firstVertex->pos().x(), secondVertex->pos().x()),
+                                std::min(firstVertex->pos().y(), secondVertex->pos().y()));
 
-    QPointF bottomRight = QPointF(std::max(firstVertex->pos().x(), secondVertex->pos().x()),
-                             std::max(firstVertex->pos().y(), secondVertex->pos().y()));
+        QPointF bottomRight = QPointF(std::max(firstVertex->pos().x(), secondVertex->pos().x()),
+                                std::max(firstVertex->pos().y(), secondVertex->pos().y()));
 
-    return QRectF(topLeft, bottomRight);
+        return QRectF(topLeft, bottomRight);
+    }
+    else
+        return QRectF(0, 0, 0, 0);
 }
 
 std::pair<Vertex *, Vertex *> Edge::getVerteces() const

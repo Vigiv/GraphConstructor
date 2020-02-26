@@ -23,10 +23,10 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    //QGraphicsScene *scene;
+    QGraphicsScene *scene;
 
-    //GraphScene graphScene;
-    //Matrix *matrix;
+    GraphScene *graphScene;
+    Matrix *matrix;
 
-    Graph *graph;
+    //Graph *graph;
 };

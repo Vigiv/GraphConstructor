@@ -5,22 +5,14 @@
 
 GraphScene::GraphScene(QObject *parent) : QObject(parent)
 {
-    scene = new QGraphicsScene(parent);
+
 }
 
 void GraphScene::setGraphicsView(QGraphicsView *view)
 {
     this->view = view;
-    this->view->setScene(scene);
 
     connect(view, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showContextMenu(const QPoint &)));
-}
-
-void GraphScene::resize(int width, int height)
-{
-    view->resize(width / 2 - 2 * WINDOW_SPACING, height - 4 * WINDOW_SPACING);
-    scene->setSceneRect(view->x(), view->y(),
-                        view->width() - 2 * WINDOW_SPACING, view->height() - 4 * WINDOW_SPACING);
 }
 
 void GraphScene::createVertexAction()
@@ -66,7 +58,7 @@ void GraphScene::addVertex(const QPoint &pos)
     vertex->setName("v" + QString::number(lastVertexId));
 
     verteces.push_back(vertex);
-    scene->addItem(vertex);
+    view->scene()->addItem(vertex);
     lastVertex = vertex;
 
     connect(vertex, SIGNAL(moveVerteces()), this, SLOT(moveVerteces()));
@@ -85,12 +77,12 @@ void GraphScene::addEdge(Vertex *first, Vertex *second)
 {
     if (first != second && !isConnected(first, second))
     {
-        Edge *edge = new Edge(scene);
+        Edge *edge = new Edge(view->scene());
         edge->setVerteces(first, second);
         edge->setId(++lastEdgeId);
         edge->setName("e" + QString::number(lastEdgeId));
         edges.push_back(edge);
-        scene->addItem(edge);
+        view->scene()->addItem(edge);
 
         emit(edgeAdded(edge));
     }
@@ -146,7 +138,7 @@ void GraphScene::showContextMenu(const QPoint &pos)
 
 void GraphScene::removeEdge(Edge *edge)
 {
-    scene->removeItem(edge);
+    view->scene()->removeItem(edge);
     edges.removeOne(edge);
 }
 
@@ -154,8 +146,20 @@ void GraphScene::removeVertex(Vertex *vertex)
 {
     removeEdges();
 
-    scene->removeItem(vertex);
+    view->scene()->removeItem(vertex);
     verteces.removeOne(vertex);
+}
+
+void GraphScene::addEmptyEdge()
+{
+    Edge *edge = new Edge(view->scene());
+    edge->setVerteces(nullptr, nullptr);
+    edge->setId(++lastEdgeId);
+    edge->setName("e" + QString::number(lastEdgeId));
+    edges.push_back(edge);
+    view->scene()->addItem(edge);
+
+    emit(edgeAdded(edge));
 }
 
 bool GraphScene::pointIsVertex(const QPoint &pos)

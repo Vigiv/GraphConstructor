@@ -2,7 +2,6 @@
 
 #include "src/Matrix/cell.h"
 
-
 Matrix::Matrix(QObject *parent) : QObject(parent)
 {
 
@@ -11,12 +10,6 @@ Matrix::Matrix(QObject *parent) : QObject(parent)
 void Matrix::setTable(QTableWidget *table)
 {
     this->table = table;
-}
-
-void Matrix::resize(int width, int height)
-{
-    table->resize(width / 2 - 2 * WINDOW_SPACING, height / 2 - 2 * WINDOW_SPACING);
-    table->move(width / 2 + WINDOW_SPACING, height / 2 - WINDOW_SPACING);
 }
 
 void Matrix::addVertex(Vertex *vertex)
@@ -31,7 +24,10 @@ void Matrix::addVertex(Vertex *vertex)
 
     for (int i = 0; i < table->columnCount(); ++i)
     {
-        createCell(rows - 1, i, 0);
+        if (rows - 2 > 0 && cells[QPair<int, int>(rows - 2, i)]->getState() != Cell::State::EMPTY)
+            createCell(rows - 1, i, Cell::State::OCCUPY);
+        else
+            createCell(rows - 1, i, Cell::State::EMPTY);
     }
 }
 
@@ -47,7 +43,7 @@ void Matrix::removeVertex(Vertex *vertex)
         for (int r = row; r < table->rowCount() - 1; ++r)
         {
             Cell *following = cells[QPair<int, int>(r + 1, c)];
-            createCell(r, c, following->getValue());
+            createCell(r, c, following->getState());
         }
     }
 
@@ -65,15 +61,23 @@ void Matrix::addEdge(Edge *edge)
     horizontalHeader.append(edge->getName());
     table->setHorizontalHeaderLabels(horizontalHeader);
 
-    int firstRow = verticalHeader.indexOf(edge->getVerteces().first->getName());
-    int secondRow = verticalHeader.indexOf(edge->getVerteces().second->getName());
+    int firstRow = -1;
+    int secondRow = -1;
+
+    if (edge->getVerteces().first != nullptr)
+        firstRow = verticalHeader.indexOf(edge->getVerteces().first->getName());
+
+    if (edge->getVerteces().second != nullptr)
+        secondRow = verticalHeader.indexOf(edge->getVerteces().second->getName());
 
     for (int i = 0; i < table->rowCount(); ++i)
     {
-        if (i == firstRow || i == secondRow)
-            createCell(i, columns - 1, 1);
+        if (firstRow == -1 || secondRow == -1)
+            createCell(i, columns - 1, Cell::State::EMPTY);
+        else if (i == firstRow || i == secondRow)
+            createCell(i, columns - 1, Cell::State::VERTEX);
         else
-            createCell(i, columns - 1, 0);
+            createCell(i, columns - 1, Cell::State::OCCUPY);
     }
 
     table->resizeColumnToContents(columns - 1);
@@ -91,7 +95,7 @@ void Matrix::removeEdge(Edge *edge)
         for (int c = column; c < table->columnCount() - 1; ++c)
         {
             Cell *following = cells[QPair<int, int>(r, c + 1)];
-            createCell(r, c, following->getValue());
+            createCell(r, c, following->getState());
         }
     }
 
@@ -117,16 +121,27 @@ void Matrix::cellChanged(Cell *cell)
     }
 }
 
-void Matrix::createCell(int row, int column, int value)
+void Matrix::createCell(int row, int column, Cell::State state)
 {
     Cell *cell = new Cell(nullptr, table);
-    cell->setValue(value);
-    if (value == 1)
+    if (state == Cell::State::VERTEX)
+    {
         cell->setState(Cell::State::VERTEX);
-    else
+        cell->setValue(1);
+    }
+    else if (state == Cell::State::OCCUPY)
+    {
         cell->setState(Cell::State::OCCUPY);
+        cell->setValue(0);
+    }
+    else if (state == Cell::State::EMPTY)
+    {
+        cell->setState(Cell::State::EMPTY);
+        cell->setValue(0);
+    }
 
     connect(cell, SIGNAL(cellChanged(Cell *)), this, SLOT(cellChanged(Cell *)));
+
 
     if (cells.contains(QPair<int, int>(row, column)))
         cells.remove(QPair<int, int>(row, column));

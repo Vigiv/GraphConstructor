@@ -4,6 +4,7 @@
 #include <QObject>
 #include <src/Graph/graphscene.h>
 #include <src/Matrix/matrix.h>
+#include <src/ActionBoard/actionboard.h>
 
 class Graph : public QObject
 {
@@ -12,9 +13,7 @@ public:
     explicit Graph(QObject *parent = nullptr);
 
     void setTable(QTableWidget *table);
-    void setView(QGraphicsView *view);
-
-    void resize(int width, int height);
+    void setGraphView(QGraphicsView *view);
 
 signals:
     void vertexAdded(Vertex* vertex);
@@ -24,9 +23,4 @@ signals:
 private:
     GraphScene *graphScene;
     Matrix *matrix;
-
-    QList<Vertex*> verteces;
-    QList<Edge*> edges;
-
-    int lastVertexId { -1 };
 };

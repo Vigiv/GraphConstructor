@@ -51,7 +51,6 @@ private:
     Vertex *lastVertex { nullptr };
 
     QGraphicsView *view;
-    //QGraphicsScene *scene;
     QPoint mousePos;
     bool isSelectedFirstVertex { false };
 

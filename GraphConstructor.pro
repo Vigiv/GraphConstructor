@@ -16,25 +16,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    src/ActionBoard/actionboard.cpp \
     src/Graph/edge.cpp \
     src/Graph/graphscene.cpp \
     src/Graph/vertex.cpp \
     src/Matrix/cell.cpp \
     src/Matrix/matrix.cpp \
-    src/graph.cpp \
     src/main.cpp \
     src/mainwindow.cpp
 
 HEADERS += \
-    src/ActionBoard/actionboard.h \
     src/Graph/edge.h \
     src/Graph/graphscene.h \
     src/Graph/vertex.h \
     src/Matrix/cell.h \
     src/Matrix/matrix.h \
     src/constants.h \
-    src/graph.h \
     src/mainwindow.h
 
 # Default rules for deployment.

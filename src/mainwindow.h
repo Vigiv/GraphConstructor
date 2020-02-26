@@ -3,7 +3,8 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QTableWidget>
-#include "src/graph.h"
+#include "src/Graph/graphscene.h"
+#include "src/Matrix/matrix.h"
 
 namespace Ui {
 class MainWindow;
@@ -27,6 +28,4 @@ private:
 
     GraphScene *graphScene;
     Matrix *matrix;
-
-    //Graph *graph;
 };

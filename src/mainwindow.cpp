@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //button -> search
     connect(ui->searchBtn, SIGNAL(clicked()), search, SLOT(search()));
+    connect(ui->resetBtn, SIGNAL(clicked()), search, SLOT(reset()));
 }
 
 MainWindow::~MainWindow()

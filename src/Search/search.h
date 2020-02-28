@@ -19,6 +19,7 @@ public:
 
 public slots:
     void search();
+    void reset();
 
     void addVertex(Vertex *vertex);
     void removeVertex(Vertex *vertex);

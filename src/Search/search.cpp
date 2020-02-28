@@ -24,7 +24,6 @@ void Search::dfs(Vertex *start)
         if(!used[*it])
         {
             (*it)->setSelected(true);
-            (*it)->update();
             dfs(*it);
         }
 
@@ -34,6 +33,8 @@ void Search::search()
 {
     if (!verteces.isEmpty())
     {
+        reset();
+
         int id = vertecesBox->currentData().toInt();
 
         for (auto it = verteces.cbegin(); it != verteces.cend(); ++it)
@@ -46,6 +47,14 @@ void Search::search()
         }
 
         used.clear();
+    }
+}
+
+void Search::reset()
+{
+    for (auto it = verteces.cbegin(); it != verteces.cend(); ++it)
+    {
+        (*it)->setSelected(false);
     }
 }
 

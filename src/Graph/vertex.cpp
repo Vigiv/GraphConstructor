@@ -26,6 +26,7 @@ void Vertex::setId(int id)
 void Vertex::setSelected(bool selected)
 {
     isSelected = selected;
+    update();
 }
 
 QRectF Vertex::boundingRect() const

@@ -21,6 +21,7 @@ SOURCES += \
     src/Graph/vertex.cpp \
     src/Matrix/cell.cpp \
     src/Matrix/matrix.cpp \
+    src/Search/search.cpp \
     src/main.cpp \
     src/mainwindow.cpp
 
@@ -30,6 +31,7 @@ HEADERS += \
     src/Graph/vertex.h \
     src/Matrix/cell.h \
     src/Matrix/matrix.h \
+    src/Search/search.h \
     src/constants.h \
     src/mainwindow.h
 

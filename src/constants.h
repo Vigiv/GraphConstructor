@@ -11,6 +11,7 @@ const int VERTEX_TEXT_SIZE = 10;
 const QColor VERTEX_BACKGROUND_COLOR (0, 206, 209);
 const QColor VERTEX_BORDER_COLOR (11, 61, 161);
 const QColor VERTEX_TEXT_COLOR (11, 61, 161);
+const QColor VERTEX_SELECTED_COLOR (255, 69, 0);
 
 //Edge
 const int EDGE_Z_VALUE = 0;

@@ -5,6 +5,7 @@
 #include <QTableWidget>
 #include "src/Graph/graphscene.h"
 #include "src/Matrix/matrix.h"
+#include "src/Search/search.h"
 
 namespace Ui {
 class MainWindow;
@@ -28,4 +29,5 @@ private:
 
     GraphScene *graphScene;
     Matrix *matrix;
+    Search *search;
 };

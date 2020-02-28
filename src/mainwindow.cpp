@@ -21,11 +21,19 @@ MainWindow::MainWindow(QWidget *parent) :
     matrix = new Matrix(parent);
     matrix->setTable(ui->matrix);
 
+    search = new Search(parent);
+    search->setSearchBox(ui->searchBox);
+    search->setVertecesBox(ui->vertecesBox);
+
 
     ui->graph->setRenderHint(QPainter::Antialiasing);
     ui->graph->setCacheMode(QGraphicsView::CacheBackground);
     ui->graph->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     ui->graph->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    //main window buttons -> graphScene
+    connect(ui->addVertexBtn, SIGNAL(clicked()), graphScene, SLOT(createVertexAction()));
+    connect(ui->addEdgeBtn, SIGNAL(clicked()), graphScene, SLOT(addEmptyEdge()));
 
     //graphScene -> matrix
     connect(graphScene, SIGNAL(vertexAdded(Vertex*)), matrix, SLOT(addVertex(Vertex*)));
@@ -33,10 +41,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(graphScene, SIGNAL(edgeAdded(Edge*)), matrix, SLOT(addEdge(Edge*)));
     connect(graphScene, SIGNAL(edgeRemoved(Edge*)), matrix, SLOT(removeEdge(Edge*)));
 
+    //graphScene -> searh
+    connect(graphScene, SIGNAL(vertexAdded(Vertex*)), search, SLOT(addVertex(Vertex*)));
+    connect(graphScene, SIGNAL(vertexRemoved(Vertex*)), search, SLOT(removeVertex(Vertex*)));
+    connect(graphScene, SIGNAL(edgeAdded(Edge*)), search, SLOT(addEdge(Edge*)));
+    connect(graphScene, SIGNAL(edgeRemoved(Edge*)), search, SLOT(removeEdge(Edge*)));
 
-    //main window buttons -> graphScene/matrix
-    connect(ui->addVertexBtn, SIGNAL(clicked()), graphScene, SLOT(createVertexAction()));
-    connect(ui->addEdgeBtn, SIGNAL(clicked()), graphScene, SLOT(addEmptyEdge()));
+
+    //button -> search
+    connect(ui->searchBtn, SIGNAL(clicked()), search, SLOT(search()));
 }
 
 MainWindow::~MainWindow()

@@ -23,6 +23,11 @@ void Vertex::setId(int id)
     this->id = id;
 }
 
+void Vertex::setSelected(bool selected)
+{
+    isSelected = selected;
+}
+
 QRectF Vertex::boundingRect() const
 {
     return QRectF(-VERTEX_RADIUS / 2, -VERTEX_RADIUS / 2, VERTEX_RADIUS, VERTEX_RADIUS);
@@ -30,11 +35,17 @@ QRectF Vertex::boundingRect() const
 
 void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setPen(VERTEX_BORDER_COLOR);
+    if (isSelected)
+        painter->setPen(VERTEX_SELECTED_COLOR);
+    else
+        painter->setPen(VERTEX_BORDER_COLOR);
     painter->setBrush(QBrush(VERTEX_BACKGROUND_COLOR, Qt::SolidPattern));
     painter->drawEllipse(boundingRect());
 
-    painter->setPen(VERTEX_TEXT_COLOR);
+    if (isSelected)
+        painter->setPen(VERTEX_SELECTED_COLOR);
+    else
+        painter->setPen(VERTEX_TEXT_COLOR);
     painter->setFont(QFont("Arial", VERTEX_TEXT_SIZE));
     painter->drawText(boundingRect(), Qt::AlignCenter, name);
 

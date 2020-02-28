@@ -11,6 +11,7 @@ public:
 
     void setName(const QString &name);
     void setId(int id);
+    void setSelected(bool selected);
 
     bool isHover() const { return hover; }
     QString getName() const {return name; }
@@ -33,7 +34,8 @@ private:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
 
 private:
-    bool hover {false};
+    bool hover { false };
+    bool isSelected { false };
     QString name;
     int id;
 };

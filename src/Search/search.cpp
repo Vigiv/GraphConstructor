@@ -1,5 +1,7 @@
 #include "search.h"
 
+#include <QQueue>
+
 
 Search::Search(QObject *parent) : QObject(parent)
 {
@@ -29,6 +31,33 @@ void Search::dfs(Vertex *start)
 
 }
 
+
+void Search::bfs(Vertex *start)
+{
+    QQueue<Vertex*> queue;      // Очередь вершин
+    queue.push_back(start);     //Добавляем стартовую вершину
+    QMap<Vertex*, int> d;       //Вектор расстояний
+    QMap<Vertex*, Vertex*> p;   //Вектор предков
+    used[start] = 1;            //Стартовую вершину считаем посещенной
+    p[start] = nullptr;         //У стартовой вершины нет предка
+    while (!queue.empty()) {
+        Vertex* v = queue.front();
+        queue.pop_front();
+        QList<Vertex *> adjacent = getAdjacent(v);
+        for (int i = 0; i < adjacent.size(); ++i) {
+            Vertex* to = adjacent[i];
+            if (used[to] != 1) {    //Если вершина не посещена,
+                used[to] = 1;       //посещаем ее
+                queue.push_back(to);
+                d[to] = d[v] + 1;   //Считаем расстояние до вершины
+                p[to] = v;          //Запоминаем предка
+                to->setSelected(true);
+            }
+        }
+    }
+}
+
+
 void Search::search()
 {
     if (!verteces.isEmpty())
@@ -36,15 +65,24 @@ void Search::search()
         reset();
 
         int id = vertecesBox->currentData().toInt();
+        Vertex *start = nullptr;
 
+        //get start vertex
         for (auto it = verteces.cbegin(); it != verteces.cend(); ++it)
         {
             if ((*it)->getId() == id)
             {
-                dfs(*it);
+                start = *it;
                 break;
             }
         }
+
+        //choose search
+        if (searchBox->currentText() == "dfs")
+            dfs(start);
+        else if (searchBox->currentText() == "bfs")
+            bfs(start);
+
 
         used.clear();
     }

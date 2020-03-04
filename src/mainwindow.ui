@@ -63,6 +63,11 @@
             <string>dfs</string>
            </property>
           </item>
+          <item>
+           <property name="text">
+            <string>bfs</string>
+           </property>
+          </item>
          </widget>
         </item>
         <item>

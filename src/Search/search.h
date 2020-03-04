@@ -14,6 +14,8 @@ public:
     void setVertecesBox(QComboBox *vertecesBox);
 
     void dfs(Vertex *start);
+    void bfs(Vertex *start);
+    void findCycle(Vertex *start);
 
 
 
@@ -33,6 +35,7 @@ private:
     QList<Vertex*> verteces;
     QList<Edge*> edges;
     QMap<Vertex*, int> used;
+
 
     QComboBox *searchBox;
     QComboBox *vertecesBox;

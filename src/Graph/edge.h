@@ -14,8 +14,13 @@ public:
     explicit Edge(QObject *parent = nullptr);
 
     void setVerteces(Vertex *first, Vertex *second);
+    void setFirst(Vertex *first);
+    void setSecond(Vertex *second);
     void setName(const QString &name);
     void setId(int id);
+
+    Vertex *first() const { return firstVertex; }
+    Vertex *second() const { return secondVertex; }
 
     QRectF boundingRect() const override;
     std::pair<Vertex *, Vertex *> getVerteces() const;
@@ -28,6 +33,8 @@ private:
 private:
     Vertex *firstVertex{nullptr};
     Vertex *secondVertex{nullptr};
+    QPointF firstPos;
+    QPointF secondPos;
 
     QString name;
     int id;

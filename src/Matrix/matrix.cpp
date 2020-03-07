@@ -22,6 +22,7 @@ void Matrix::addVertex(Vertex *vertex)
     verticalHeader.append(vertex->getName());
     table->setVerticalHeaderLabels(verticalHeader);
 
+
     for (int i = 0; i < table->columnCount(); ++i)
     {
         if (rows - 2 > 0 && cells[QPair<int, int>(rows - 2, i)]->getState() != Cell::State::EMPTY)
@@ -105,20 +106,64 @@ void Matrix::removeEdge(Edge *edge)
 
 void Matrix::cellChanged(Cell *cell)
 {
+    cell->setState(Cell::State::EMPTY);
+    setOccupyToEmpty(table->currentColumn());
+    Edge *currentEdge = nullptr;
+
+    //get current edge
+    for (auto it = edges.begin(); it != edges.end(); ++it)
+    {
+        if ((*it)->getName() == horizontalHeader[table->currentColumn()])
+        {
+            currentEdge = *it;
+            break;
+        }
+    }
+
     if (cell->getValue() == 0)
     {
-        cell->setState(Cell::State::EMPTY);
-        setOccupyToEmpty(table->currentColumn());
+        if (currentEdge->first() != nullptr && currentEdge->first()->getName() == verticalHeader[table->currentRow()])
+            currentEdge->setFirst(nullptr);
+        else
+            currentEdge->setSecond(nullptr);
+
     }
     else if (cell->getValue() == 1)
     {
         cell->setState(Cell::State::VERTEX);
+
+        QPair<int, int> rows = getVertexRows(table->currentColumn());
+
+        QString firstName;
+        QString secondName;
+        if (rows.first != -1)
+            firstName = verticalHeader[rows.first];
+        if (rows.second != -1)
+            secondName = verticalHeader[rows.second];
+        Vertex *first = nullptr;
+        Vertex *second = nullptr;
+
+
+        for (auto it = verteces.cbegin(); it != verteces.cend(); ++it)
+        {
+            if ((*it)->getName() == firstName)
+                first = *it;
+            if ((*it)->getName() == secondName)
+                second = *it;
+        }
+
+        if (currentEdge->first() == nullptr)
+            currentEdge->setFirst(first);
+        else
+            currentEdge->setSecond(second);
 
         if (getVertecesCount(table->currentColumn()) == 1)
             setBlockedEmptyToOccupy(table->currentColumn());
         else if (getVertecesCount(table->currentColumn()) == 2)
             setAllEmptyToOccupy(table->currentColumn());
     }
+
+    currentEdge->update(currentEdge->boundingRect());
 }
 
 void Matrix::createCell(int row, int column, Cell::State state)

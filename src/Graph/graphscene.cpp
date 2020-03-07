@@ -12,6 +12,8 @@ void GraphScene::setGraphicsView(QGraphicsView *view)
 {
     this->view = view;
 
+    mousePos = QPoint(view->rect().width() / 2, view->rect().height() / 2);
+
     connect(view, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showContextMenu(const QPoint &)));
 }
 

@@ -171,19 +171,18 @@ void Matrix::createCell(int row, int column, Cell::State state)
     Cell *cell = new Cell(nullptr, table);
     if (state == Cell::State::VERTEX)
     {
-        cell->setState(Cell::State::VERTEX);
         cell->setValue(1);
     }
     else if (state == Cell::State::OCCUPY)
     {
-        cell->setState(Cell::State::OCCUPY);
         cell->setValue(0);
     }
     else if (state == Cell::State::EMPTY)
     {
-        cell->setState(Cell::State::EMPTY);
         cell->setValue(0);
     }
+
+    cell->setState(state);
 
     connect(cell, SIGNAL(cellChanged(Cell *)), this, SLOT(cellChanged(Cell *)));
 

@@ -15,15 +15,19 @@ MainWindow::MainWindow(QWidget *parent) :
     scene = new QGraphicsScene(ui->graph);
     ui->graph->setScene(scene);
 
-    graphScene = new GraphScene(parent);
+    graphScene = new GraphScene(this);
     graphScene->setGraphicsView(ui->graph);
 
-    matrix = new Matrix(parent);
+    matrix = new Matrix(this);
     matrix->setTable(ui->matrix);
 
-    search = new Search(parent);
+    search = new Search(this);
     search->setSearchBox(ui->searchBox);
     search->setVertecesBox(ui->vertecesBox);
+
+    file = new File(this);
+    file->setWidgetParent(parent);
+    file->setGraphicsView(ui->graph);
 
 
     ui->graph->setRenderHint(QPainter::Antialiasing);
@@ -51,6 +55,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //button -> search
     connect(ui->searchBtn, SIGNAL(clicked()), search, SLOT(search()));
     connect(ui->resetBtn, SIGNAL(clicked()), search, SLOT(reset()));
+
+
+    //menubar -> file
+    connect(ui->actionSaveAs, SIGNAL(triggered()), file, SLOT(saveToFile()));
 }
 
 MainWindow::~MainWindow()

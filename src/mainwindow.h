@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QTableWidget>
+#include <src/File/file.h>
 #include "src/Graph/graphscene.h"
 #include "src/Matrix/matrix.h"
 #include "src/Search/search.h"
@@ -30,4 +31,5 @@ private:
     GraphScene *graphScene;
     Matrix *matrix;
     Search *search;
+    File *file;
 };

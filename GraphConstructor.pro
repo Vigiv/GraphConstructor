@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/File/file.cpp \
     src/Graph/edge.cpp \
     src/Graph/graphscene.cpp \
     src/Graph/vertex.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
     src/mainwindow.cpp
 
 HEADERS += \
+    src/File/file.h \
     src/Graph/edge.h \
     src/Graph/graphscene.h \
     src/Graph/vertex.h \

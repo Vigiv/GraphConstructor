@@ -195,6 +195,16 @@ bool GraphScene::isConnected(const Vertex *first, const Vertex *second) const
     return false;
 }
 
+QList<Vertex *> *GraphScene::getVertecesLink()
+{
+    return &verteces;
+}
+
+QList<Edge *> *GraphScene::getEdgesLink()
+{
+    return &edges;
+}
+
 
 
 

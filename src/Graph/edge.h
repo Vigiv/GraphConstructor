@@ -1,5 +1,4 @@
-#ifndef EDGE_H
-#define EDGE_H
+#pragma once
 
 #include <QGraphicsItem>
 #include <QObject>
@@ -22,6 +21,8 @@ public:
     Vertex *first() const { return firstVertex; }
     Vertex *second() const { return secondVertex; }
 
+    Vertex *getAnotherVertex(const Vertex *vertex) const;
+
     QRectF boundingRect() const override;
     std::pair<Vertex *, Vertex *> getVerteces() const;
     QString getName() const {return name; }
@@ -39,5 +40,3 @@ private:
     QString name;
     int id;
 };
-
-#endif // EDGE_H

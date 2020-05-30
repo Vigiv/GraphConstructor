@@ -15,6 +15,9 @@ public:
     bool pointIsVertex(const QPoint &pos);
     bool isConnected(const Vertex *first, const Vertex *second) const;
 
+    QList<Vertex *> *getVertecesLink();
+    QList<Edge *> *getEdgesLink();
+
 
 public slots:
     void createVertexAction();

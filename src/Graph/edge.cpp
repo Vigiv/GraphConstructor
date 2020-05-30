@@ -40,6 +40,17 @@ void Edge::setId(int id)
     this->id = id;
 }
 
+Vertex *Edge::getAnotherVertex(const Vertex *vertex) const
+{
+    if (vertex == firstVertex)
+        return secondVertex;
+
+    if (vertex == secondVertex)
+        return firstVertex;
+
+    return  nullptr;
+}
+
 QRectF Edge::boundingRect() const
 {
 

@@ -25,6 +25,11 @@ MainWindow::MainWindow(QWidget *parent) :
     search->setSearchBox(ui->searchBox);
     search->setVertecesBox(ui->vertecesBox);
 
+    topology = new Topology(this);
+    topology->setTopologyBox(ui->topologyBox);
+    topology->addLinkToVerteces(graphScene->getVertecesLink());
+    topology->addLinkToEdges(graphScene->getEdgesLink());
+
     file = new File(this);
     file->setWidgetParent(parent);
     file->setGraphicsView(ui->graph);
@@ -56,6 +61,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->searchBtn, SIGNAL(clicked()), search, SLOT(search()));
     connect(ui->resetBtn, SIGNAL(clicked()), search, SLOT(reset()));
 
+    //button -> topology
+    connect(ui->toTopologyBtn, SIGNAL(clicked()), topology, SLOT(toTopology()));
 
     //menubar -> file
     connect(ui->actionSaveAs, SIGNAL(triggered()), file, SLOT(saveToFile()));
@@ -69,6 +76,8 @@ MainWindow::~MainWindow()
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     ui->graph->scene()->setSceneRect(ui->graph->rect());
+
+    topology->updateGraphSceneSize(ui->graph->width(), ui->graph->height());
 
     Q_UNUSED(event)
 }

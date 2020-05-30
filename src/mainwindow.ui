@@ -184,6 +184,44 @@
             </property>
            </spacer>
           </item>
+          <item>
+           <widget class="QPushButton" name="toTopologyBtn">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>to Topology</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="topologyBox">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <item>
+             <property name="text">
+              <string>no topology</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>star</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>circle</string>
+             </property>
+            </item>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>

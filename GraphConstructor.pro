@@ -19,6 +19,7 @@ SOURCES += \
     src/File/file.cpp \
     src/Graph/edge.cpp \
     src/Graph/graphscene.cpp \
+    src/Graph/topology.cpp \
     src/Graph/vertex.cpp \
     src/Matrix/cell.cpp \
     src/Matrix/matrix.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     src/File/file.h \
     src/Graph/edge.h \
     src/Graph/graphscene.h \
+    src/Graph/topology.h \
     src/Graph/vertex.h \
     src/Matrix/cell.h \
     src/Matrix/matrix.h \

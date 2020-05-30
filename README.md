@@ -1,5 +1,4 @@
 # GraphConstructor
--GraphConstructor.pro
 -src (folder) - папка с исходным кодом
 
       -File (folder) - код для работы с файлами (сохранение графа)
